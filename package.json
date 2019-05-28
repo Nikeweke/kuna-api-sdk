@@ -1,0 +1,43 @@
+{
+  "_from": "kuna-api-sdk",
+  "_id": "kuna-api-sdk@1.0.2",
+  "_inBundle": false,
+  "_integrity": "sha512-Jxx8pNpJKvnotT/KdT2LVqSma4kwlL4XRSTKy4wyHdpZFyuGBh7YpWqLE7uaiXZaPH4MVKM3McJftdCRwjQm0g==",
+  "_location": "/kuna-api-sdk",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "kuna-api-sdk",
+    "name": "kuna-api-sdk",
+    "escapedName": "kuna-api-sdk",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/kuna-api-sdk/-/kuna-api-sdk-1.0.2.tgz",
+  "_shasum": "4e026aba94c1520bd15662505501d06154ba81bc",
+  "_spec": "kuna-api-sdk",
+  "_where": "D:\\CODING\\PROJECTS\\Kuna-api-sdk",
+  "author": "",
+  "bundleDependencies": false,
+  "dependencies": {
+    "axios": "^0.18.0",
+    "crypto-js": "^3.1.9-1",
+    "query-string": "^6.5.0"
+  },
+  "deprecated": false,
+  "description": "Kuna api sdk is here",
+  "keywords": [],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "kuna-api-sdk",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.2"
+}
