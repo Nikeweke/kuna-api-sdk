@@ -24,18 +24,16 @@ kunaPrivateAPI.getTrades('btcuah')
 ```
 
 
-### API
+### Public
+* `KunaAPI.getCurrency()` - Последние данные по рынку 
+* `KunaAPI.getBirgaStakan()` - Биржевой стакан
+* `KunaAPI.getHistoryTrades()` -  История торгов
+* `KunaAPI.getUnixTime()` -  Забрать время Юникс
 
-#### KunaAPI.
-* getCurrency()
-* getBirgaStakan()
-* getHistoryTrades()
-* getUnixTime()
-
-#### KunaPrivateAPI.
-* getOrders('btcuah') 
-* getInfoUser()
-* cancelOrder(order_id)
-* makeOrder({side, volume, market, price})
-* getTrades ('btcuah')
-* prepareUrl({method, url, params})
+### Private
+* `KunaPrivateAPI.getOrders('btcuah')` - Активные ордера пользователя 
+* `KunaPrivateAPI.getInfoUser()` -  Информация о пользователе и активах 
+* `KunaPrivateAPI.cancelOrder(order_id)` - Отмена ордера
+* `KunaPrivateAPI.makeOrder({side, volume, market, price})` - Выставить ордер 
+* `KunaPrivateAPI.getTrades ('btcuah')` - История сделок пользователя 
+* `KunaPrivateAPI.prepareUrl({method, url, params})` - подготовка адреса для запроса
