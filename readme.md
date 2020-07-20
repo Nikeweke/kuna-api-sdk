@@ -8,7 +8,7 @@ process.env.KUNA_SECRET_TOKEN = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
 // or use dotenv package with .env
 
 // 2. use it
-const { KunaAPI, KunaPrivateAPI} = require('./kuna-sdk')
+const { KunaAPI, KunaPrivateAPI} = require('kuna-api-sdk')
 
 // public api (you need set pair)
 let kunaBTCUAH = new KunaAPI('btcuah')
