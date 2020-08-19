@@ -11,6 +11,14 @@ function KunaAPI (market) {
 } 
 
 /**
+ * Забрать время Юникс
+ * @description https://kuna.io/api/v2/timestamp
+ */
+KunaAPI.prototype.getUnixTime = function () {
+  return this.request('/timestamp').then((unixTime) => unixTime + '000')
+}
+
+/**
  * Последние данные по рынку
  * @description https://kuna.io/api/v2/tickers/btcuah
  */
@@ -18,18 +26,18 @@ KunaAPI.prototype.getCurrency = function () {
   if (!this.market) {
     return Promise.reject('Set a pair of crypto (btcuah, ethuah)')
   }
-  return this.req('/tickers/' + this.market).then(({ticker}) => ticker)
+  return this.request('/tickers/' + this.market).then(({ticker}) => ticker)
 }
 
 /**
  * Биржевой стакан
  * @description https://kuna.io/api/v2/order_book?market=btcuah
  */
-KunaAPI.prototype.getBirgaStakan = function () {
+KunaAPI.prototype.getOrderBook = function () {
   if (!this.market) {
     return Promise.reject('Set a pair of crypto (btcuah, ethuah)')
   }
-  return this.req('/order_book?market=' + this.market)
+  return this.request('/order_book?market=' + this.market)
 }
 
 /**
@@ -40,16 +48,10 @@ KunaAPI.prototype.getHistoryTrades = function () {
   if (!this.market) {
     return Promise.reject('Set a pair of crypto (btcuah, ethuah)')
   }
-  return this.req('/trades?market=' + this.market)
+  return this.request('/trades?market=' + this.market)
 }
 
-/**
- * Забрать время Юникс
- * @description https://kuna.io/api/v2/timestamp
- */
-KunaAPI.prototype.getUnixTime = function () {
-  return this.req('/timestamp').then((unixTime) => unixTime + '000')
-}
+
 
 /**
  * Сделать запрос
@@ -57,17 +59,19 @@ KunaAPI.prototype.getUnixTime = function () {
  * @param {String} method
  * @param {Object} postData
  */
-KunaAPI.prototype.req = function (url_api, method, postData) {
+KunaAPI.prototype.request = function (url_api, method, postData) {
   url      = this.api + url_api
   method   = method   || 'get'
   postData = postData || {}
 
-  return axios[method](url, {})
+  const options = {}
+
+  return axios[method](url, postData, options)
     .then(({data}) => data )
     .catch((error) => {
       if (error.response != undefined) {
         console.log('ERROR')
-        // console.log(error)
+        console.log(error)
 
       } else {
         console.log('ERROR 2')

@@ -1,4 +1,4 @@
 module.exports = {
-  KunaAPI: require('./kuna-api'),
-  KunaPrivateAPI: require('./kuna-private-api')
+  v2: require('./v2'),
+  v3: require('./v3')
 }
