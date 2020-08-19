@@ -30,6 +30,14 @@
     "crypto-js": "^3.1.9-1",
     "query-string": "^6.5.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Nikeweke/kuna-api-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Nikeweke/kuna-api-sdk/issues"
+  },
+  "homepage": "https://github.com/Nikeweke/kuna-api-sdk",
   "deprecated": false,
   "description": "Kuna api sdk is here",
   "keywords": [],
