@@ -103,10 +103,11 @@ KunaPrivate.prototype.authedRequest = async function(url_api, method, params, bo
   const tonce = await this.getUnixTime()
   // queryParams
   let queryParams = queryString.stringify({
-    accessKey: this.accessKey,
+    access_key: this.accessKey,
     tonce,
     ...params
   })
+
   // signature
   const signature = this.getSignature(method, url_api, queryParams)
   queryParams += `&signature=${signature}`

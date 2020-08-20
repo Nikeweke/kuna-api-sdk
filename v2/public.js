@@ -5,8 +5,7 @@
 
 const axios = require('axios')
 
-function KunaAPI (market) {
-  this.market = market
+function KunaPublic () {
   this.api  = 'https://kuna.io/api/v2'
 } 
 
@@ -14,7 +13,7 @@ function KunaAPI (market) {
  * Забрать время Юникс
  * @description https://kuna.io/api/v2/timestamp
  */
-KunaAPI.prototype.getUnixTime = function () {
+KunaPublic.prototype.getUnixTime = function () {
   return this.request('/timestamp').then((unixTime) => unixTime + '000')
 }
 
@@ -22,33 +21,33 @@ KunaAPI.prototype.getUnixTime = function () {
  * Последние данные по рынку
  * @description https://kuna.io/api/v2/tickers/btcuah
  */
-KunaAPI.prototype.getCurrency = function () {
-  if (!this.market) {
+KunaPublic.prototype.getCurrency = function (market) {
+  if (!market) {
     return Promise.reject('Set a pair of crypto (btcuah, ethuah)')
   }
-  return this.request('/tickers/' + this.market).then(({ticker}) => ticker)
+  return this.request('/tickers/' + market).then(({ticker}) => ticker)
 }
 
 /**
  * Биржевой стакан
  * @description https://kuna.io/api/v2/order_book?market=btcuah
  */
-KunaAPI.prototype.getOrderBook = function () {
-  if (!this.market) {
+KunaPublic.prototype.getOrderBook = function (market) {
+  if (!market) {
     return Promise.reject('Set a pair of crypto (btcuah, ethuah)')
   }
-  return this.request('/order_book?market=' + this.market)
+  return this.request('/order_book?market=' + market)
 }
 
 /**
  * История торгов
  * @description https://kuna.io/api/v2/trades?market=btcuah
  */
-KunaAPI.prototype.getHistoryTrades = function () {
-  if (!this.market) {
+KunaPublic.prototype.getHistoryTrades = function (market) {
+  if (!market) {
     return Promise.reject('Set a pair of crypto (btcuah, ethuah)')
   }
-  return this.request('/trades?market=' + this.market)
+  return this.request('/trades?market=' + market)
 }
 
 
@@ -59,7 +58,7 @@ KunaAPI.prototype.getHistoryTrades = function () {
  * @param {String} method
  * @param {Object} postData
  */
-KunaAPI.prototype.request = function (url_api, method, postData) {
+KunaPublic.prototype.request = function (url_api, method, postData) {
   url      = this.api + url_api
   method   = method   || 'get'
   postData = postData || {}
@@ -80,6 +79,6 @@ KunaAPI.prototype.request = function (url_api, method, postData) {
     })
 }
 
-module.exports = KunaAPI
+module.exports = KunaPublic
 
 

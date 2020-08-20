@@ -40,7 +40,7 @@ KunaPrivate.prototype.accountBalance = async function () {
 
 /**
  * Создать ордер
- * @param {Object} orderItem {symbol, type [limit, market, market_by_quote], amount, price}
+ * @param {Object} order {symbol, type [limit, market, market_by_quote], amount, price}
  * @description https://docs.kuna.io/docs/%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C-%D0%BE%D1%80%D0%B4%D0%B5%D1%80-1
  */
 KunaPrivate.prototype.createOrder = async function (order) {
@@ -138,9 +138,8 @@ KunaPrivate.prototype.authedRequest = async function(url_api, method, body = {})
   return axios[method](url, body, options)
     .then(({data}) => data)
     .catch((error) => {
-      console.log(error.response.data)
       if (error.response != undefined) {
-        console.log('ERROR')
+        console.log('ERROR: ', error.response.data)
         // console.log(error)
       } else {
         console.log('ERROR 2')
