@@ -5,8 +5,7 @@
 
 const axios = require('axios')
 
-function KunaPublic (market) {
-  this.market = market
+function KunaPublic () {
   this.api  = 'https://api.kuna.io/v3/'
 } 
 
@@ -38,22 +37,22 @@ KunaPublic.prototype.getMarkets = function() {
  * Последние данные по рынку
  * @description https://api.kuna.io/v3/tickers?symbols=btcuah
  */
-KunaPublic.prototype.getTickers = function() {
-  if (!this.market) {
+KunaPublic.prototype.getTickers = function(market) {
+  if (!market) {
     return Promise.reject('Set a pair of crypto (btcuah, ethuah)')
   }
-  return this.request(`tickers?symbols=${this.market}`)
+  return this.request(`tickers?symbols=${market}`)
 }
 
 /**
  * Биржевой стакан
  * @description https://api.kuna.io/v3/book/{symbol}
  */
-KunaPublic.prototype.getOrderBook = function() {
-  if (!this.market) {
+KunaPublic.prototype.getOrderBook = function(market) {
+  if (!market) {
     return Promise.reject('Set a pair of crypto (btcuah, ethuah)')
   }
-  return this.request('book/' + this.market)
+  return this.request('book/' + market)
 }
 
 

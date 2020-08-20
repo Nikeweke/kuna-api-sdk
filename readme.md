@@ -13,10 +13,10 @@ process.env.KUNA_SECRET_TOKEN = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
 const { KunaPublic, KunaPrivate } = require('kuna-api-sdk/v3')
 
 // public api (you need set pair)
-let kunaBTCUAH = new KunaPublic('btcuah')
+let kunaPublic = new KunaPublic()
 let kunaPrivate = new KunaPrivate()
 
-kunaBTCUAH.getTickers()
+kunaPublic.getTickers('btcuah')
   .then((data) => console.log(data))
   .catch(err => console.log('Error: ', err))
 
@@ -51,9 +51,13 @@ KunaPrivate.accountInfo(')
 * `.request()` - Сделать запрос
 
 #### KunaPrivate
-* `.getOrders('btcuah')` - Активные ордера пользователя 
-* `.getInfoUser()` -  Информация о пользователе и активах 
-* `.cancelOrder(order_id)` - Отмена ордера
-* `.makeOrder({side, volume, market, price})` - Выставить ордер 
-* `.getTrades ('btcuah')` - История сделок пользователя 
-* `.prepareUrl({method, url, params})` - подготовка адреса для запроса
+* `.accountInfo()` - Данные аккаунта
+* `.accountBalance()` -  Баланс аккаунта 
+* `.createOrder({symbol, type, amount, price})` - Создать ордер
+* `.getActiveOrders(market)` - Список активных ордеров
+* `.cancelOrder(order_id)` - Отменить ордер
+* `.getAssetsHistory(type)` -  Получить историю депозитов и выводов
+* `.getExecutedOrders(market)` -  Список исполненных ордеров
+* `.getTradesByOrderId(market, order_id)` -  Список сделок по ордеру
+* `.authedRequest(type)` -  Сделать запрос с авторизационными заголовками и подписью
+* `.getSignature(url_api, nonce, body)` - Создать подпись
