@@ -26,13 +26,13 @@ KunaPrivate.accountInfo(')
 ```
 
 ### API V2
-#### KunaPublic
+#### kunaPublic
 * `.getCurrency()` - Последние данные по рынку 
 * `.getBirgaStakan()` - Биржевой стакан
 * `.getHistoryTrades()` -  История торгов
 * `.getUnixTime()` -  Забрать время Юникс
 
-#### KunaPrivate.
+#### kunaPrivate.
 * `.getOrders('btcuah')` - Активные ордера пользователя 
 * `.getInfoUser()` -  Информация о пользователе и активах 
 * `.cancelOrder(order_id)` - Отмена ордера
@@ -41,7 +41,7 @@ KunaPrivate.accountInfo(')
 * `.prepareUrl({method, url, params})` - подготовка адреса для запроса
 
 ### API V3
-#### KunaPublic
+#### kunaPublic
 * `.getUnixTime()` - Забрать время Юникс
 * `.getCurrencies()` - Список доступных валют
 * `.getMarkets()` - Рынки
@@ -50,7 +50,7 @@ KunaPrivate.accountInfo(')
 * `.getFees()` - Комиссии на ввод и вывод
 * `.request()` - Сделать запрос
 
-#### KunaPrivate
+#### kunaPrivate
 * `.accountInfo()` - Данные аккаунта
 * `.accountBalance()` -  Баланс аккаунта 
 * `.createOrder({symbol, type, amount, price})` - Создать ордер
