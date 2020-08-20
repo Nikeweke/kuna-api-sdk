@@ -69,7 +69,7 @@ KunaPrivate.prototype.cancelOrder = async function (order_id) {
   const url = `order/cancel` 
   const method = 'post'
   const body = { order_id }
-  // const body = { order_ids: order }
+  // const body = { order_ids: [12332] } // DOES NOT WORK if ARRAY
   return this.authedRequest(url, method, body)
 }
 
