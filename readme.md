@@ -31,6 +31,7 @@ KunaPrivate.accountInfo(')
 * `.getBirgaStakan()` - Биржевой стакан
 * `.getHistoryTrades()` -  История торгов
 * `.getUnixTime()` -  Забрать время Юникс
+* `.request()` -  Сделать запрос
 
 #### kunaPrivate.
 * `.getOrders('btcuah')` - Активные ордера пользователя 
@@ -38,7 +39,8 @@ KunaPrivate.accountInfo(')
 * `.cancelOrder(order_id)` - Отмена ордера
 * `.makeOrder({side, volume, market, price})` - Выставить ордер 
 * `.getTrades ('btcuah')` - История сделок пользователя 
-* `.prepareUrl({method, url, params})` - подготовка адреса для запроса
+* `.authedRequest()` -  Сделать запрос с авторизационными заголовками и подписью
+* `.getSignature(method, url, queryParams)` - Создать подпись
 
 ### API V3
 #### kunaPublic
@@ -59,5 +61,5 @@ KunaPrivate.accountInfo(')
 * `.getAssetsHistory(type)` -  Получить историю депозитов и выводов
 * `.getExecutedOrders(market)` -  Список исполненных ордеров
 * `.getTradesByOrderId(market, order_id)` -  Список сделок по ордеру
-* `.authedRequest(type)` -  Сделать запрос с авторизационными заголовками и подписью
+* `.authedRequest()` -  Сделать запрос с авторизационными заголовками и подписью
 * `.getSignature(url_api, nonce, body)` - Создать подпись
