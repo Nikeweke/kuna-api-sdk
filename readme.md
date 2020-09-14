@@ -22,7 +22,7 @@ kuna.public.getTickers('btcuah')
   .then((data) => console.log(data))
   .catch(err => console.log('Error: ', err))
 
-kuna.private.accountInfo(')
+kuna.private.accountInfo()
   .then((data) => console.log(data))
   .catch(err => console.log('Error: ', err))
 ```
