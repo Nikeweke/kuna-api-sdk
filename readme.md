@@ -14,8 +14,8 @@ const { KunaPublic, KunaPrivate } = require('kuna-api-sdk/v3')
 const kuna = {
   private: new KunaPrivate(),
   public: new KunaPublic(),
-  private: new KunaPrivateV2(),
-  public: new KunaPublicV2(),
+  privateV2: new KunaPrivateV2(),
+  publicV2: new KunaPublicV2(),
 }
 
 kuna.public.getTickers('btcuah')
