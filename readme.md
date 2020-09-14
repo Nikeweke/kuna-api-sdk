@@ -9,18 +9,20 @@ process.env.KUNA_SECRET_TOKEN = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
 // require('dotenv').config() 
 
 // 2. you can use api V2 or V3 
-// const { KunaPublic, KunaPrivate } = require('kuna-api-sdk/v2')
+const { KunaPublic: KunaPublicV2, KunaPrivate: KunaPrivateV2 } = require('kuna-api-sdk/v2')
 const { KunaPublic, KunaPrivate } = require('kuna-api-sdk/v3')
+const kuna = {
+  private: new KunaPrivate(),
+  public: new KunaPublic(),
+  private: new KunaPrivateV2(),
+  public: new KunaPublicV2(),
+}
 
-// public api (you need set pair)
-let kunaPublic = new KunaPublic()
-let kunaPrivate = new KunaPrivate()
-
-kunaPublic.getTickers('btcuah')
+kuna.public.getTickers('btcuah')
   .then((data) => console.log(data))
   .catch(err => console.log('Error: ', err))
 
-KunaPrivate.accountInfo(')
+kuna.private.accountInfo(')
   .then((data) => console.log(data))
   .catch(err => console.log('Error: ', err))
 ```
