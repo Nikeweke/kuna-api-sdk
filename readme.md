@@ -2,21 +2,15 @@
 
 ### Quick start
 ```js
-// 1. set a tokens
-process.env.KUNA_ACCES_TOKEN = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
-process.env.KUNA_SECRET_TOKEN = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
-// or use dotenv package with .env
-// require('dotenv').config() 
+// 1. init a keys
+const keys = {
+  publicKey: 'XXXXXXXXXXXXXXXXXXXXXXXXX',
+  secretKey: 'XXXXXXXXXXXXXXXXXXXXXXXXX',
+}
 
 // 2. you can use api V2 or V3 
-const { KunaPublic: KunaPublicV2, KunaPrivate: KunaPrivateV2 } = require('kuna-api-sdk/v2')
-const { KunaPublic, KunaPrivate } = require('kuna-api-sdk/v3')
-const kuna = {
-  private: new KunaPrivate(),
-  public: new KunaPublic(),
-  privateV2: new KunaPrivateV2(),
-  publicV2: new KunaPublicV2(),
-}
+const kuna = require('kuna-api-sdk/v3')(keys)  // { public:..., private:... }
+const kunaV2 = require('kuna-api-sdk/v2')(keys) // { public:..., private:... }
 
 kuna.public.getTickers('btcuah')
   .then((data) => console.log(data))
@@ -28,14 +22,14 @@ kuna.private.accountInfo()
 ```
 
 ### API V2
-#### kunaPublic
+#### kuna.public.
 * `.getCurrency()` - Последние данные по рынку 
 * `.getBirgaStakan()` - Биржевой стакан
 * `.getHistoryTrades()` -  История торгов
 * `.getUnixTime()` -  Забрать время Юникс
 * `.request()` -  Сделать запрос
 
-#### kunaPrivate.
+#### kuna.private.
 * `.getOrders('btcuah')` - Активные ордера пользователя 
 * `.getInfoUser()` -  Информация о пользователе и активах 
 * `.cancelOrder(order_id)` - Отмена ордера
@@ -45,7 +39,7 @@ kuna.private.accountInfo()
 * `.getSignature(method, url, queryParams)` - Создать подпись
 
 ### API V3
-#### kunaPublic
+#### kuna.public.
 * `.getUnixTime()` - Забрать время Юникс
 * `.getCurrencies()` - Список доступных валют
 * `.getMarkets()` - Рынки
@@ -54,7 +48,7 @@ kuna.private.accountInfo()
 * `.getFees()` - Комиссии на ввод и вывод
 * `.request()` - Сделать запрос
 
-#### kunaPrivate
+#### kuna.private.
 * `.accountInfo()` - Данные аккаунта
 * `.accountBalance()` -  Баланс аккаунта 
 * `.createOrder({symbol, type, amount, price})` - Создать ордер

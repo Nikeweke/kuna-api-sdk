@@ -1,4 +1,4 @@
-module.exports = {
-  KunaPublic: require('./public'),
-  KunaPrivate: require('./private'),
-}
+module.exports = (keys) => ({
+  public: new (require('./public'))(),
+  private: new (require('./private'))(keys),
+})

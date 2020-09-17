@@ -9,10 +9,10 @@ const queryString = require('query-string')
 const hmacSHA256  = require('crypto-js/hmac-sha256')
 const encHex      = require('crypto-js/enc-hex')
 
-function KunaPrivate () {
+function KunaPrivate ({ publicKey, secretKey }) {
   KunaAPI.call(this)
-  this.accessKey = process.env.KUNA_PUBLIC_TOKEN  
-  this.secretKey = process.env.KUNA_SECRET_TOKEN  
+  this.accessKey = publicKey  
+  this.secretKey = secretKey
   this.tonce      = 0          // временная метка unix
   this.query_params = ''
   this.url_params   = ''

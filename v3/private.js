@@ -8,10 +8,10 @@ const crypto = require('crypto');
 
 const KunaPublic = require('./public')
 
-function KunaPrivate() {
+function KunaPrivate({ publicKey, secretKey }) {
   KunaPublic.call(this)
-  this.publicKey = process.env.KUNA_PUBLIC_TOKEN  
-  this.secretKey = process.env.KUNA_SECRET_TOKEN  
+  this.publicKey = publicKey 
+  this.secretKey = secretKey
   this.tonce      = 0  // временная метка unix
   this.query_params = ''
   this.url_params   = ''
