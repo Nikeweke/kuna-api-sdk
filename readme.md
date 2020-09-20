@@ -57,5 +57,9 @@ kuna.private.accountInfo()
 * `.getAssetsHistory(type)` -  Получить историю депозитов и выводов
 * `.getExecutedOrders(market)` -  Список исполненных ордеров
 * `.getTradesByOrderId(market, order_id)` -  Список сделок по ордеру
+* `.cancelBuyOrders(market)` - Отменить ордера на покупку
+* `.cancelSellOrders(market)` - Отменить ордера на продажу
+* `.cancelOrderBySide(market, sign)` - Отменить ордера по знаку ("-1" - продажа, "1" - покупка)
+* `.cancelAllOrders(market)` - Отменить все ордера 
 * `.authedRequest()` -  Сделать запрос с авторизационными заголовками и подписью
 * `.getSignature(url_api, nonce, body)` - Создать подпись

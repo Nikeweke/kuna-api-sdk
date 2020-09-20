@@ -73,6 +73,34 @@ KunaPrivate.prototype.cancelOrder = async function (order_id) {
   return this.authedRequest(url, method, body)
 }
 
+// ===================================================================> EXPERIMENTAL
+KunaPrivate.prototype.cancelBuyOrders = async function (market) {
+  this.cancelOrderBySide(market, 1)
+}
+
+KunaPrivate.prototype.cancelSellOrders = async function (market) {
+  this.cancelOrderBySide(market, -1)
+}
+
+KunaPrivate.prototype.cancelAllOrders = async function (market) {
+  await this.cancelOrderBySide(market, 1)
+  this.cancelOrderBySide(market, -1)
+}
+
+KunaPrivate.prototype.cancelOrderBySide = async function(market, sign) {
+  const sleep = (delay = 800) => new Promise((res) => setTimeout(res, delay))
+  const orders = await this.getActiveOrders(market)
+  if (orders.length === 0) return 
+  for (let order of orders) {
+    if (Math.sign(order[7]) === sign) {
+      await this.cancelOrder(order[0])
+      console.log(`order ${order[0]} cancelled`)
+      await sleep()
+    } 
+  }
+}
+// ===================================================================> EXPERIMENTAL
+
 /**
  * Получить историю депозитов и выводов
  * @param {String} type (withdraws, deposits)
@@ -137,15 +165,15 @@ KunaPrivate.prototype.authedRequest = async function(url_api, method, body = {})
 
   return axios[method](url, body, options)
     .then(({data}) => data)
-    .catch((error) => {
-      if (error.response != undefined) {
-        console.log('ERROR: ', error.response.data)
-        // console.log(error)
-      } else {
-        console.log('ERROR 2')
-        console.log(error)
-      }
-    })
+    // .catch((error) => {
+    //   if (error.response != undefined) {
+    //     console.log('ERROR: ', error.response.data)
+    //     // console.log(error)
+    //   } else {
+    //     console.log('ERROR 2')
+    //     console.log(error)
+    //   }
+    // })
 }
 
 /**
