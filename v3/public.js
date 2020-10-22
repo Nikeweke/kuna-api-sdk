@@ -3,7 +3,7 @@
 *
 */
 
-const axios = require('axios')
+const axios = require('axios-https-proxy-fix')
 
 function KunaPublic () {
   this.api  = 'https://api.kuna.io/v3/'

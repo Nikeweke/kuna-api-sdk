@@ -3,7 +3,7 @@
 *
 */
 
-const axios = require('axios')
+const axios = require('axios-https-proxy-fix')
 const crypto = require('crypto');
 
 const KunaPublic = require('./public')

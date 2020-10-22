@@ -4,7 +4,7 @@
 */
 const KunaAPI     = require('./public')
 
-const axios = require('axios')
+const axios = require('axios-https-proxy-fix')
 const queryString = require('query-string')
 const hmacSHA256  = require('crypto-js/hmac-sha256')
 const encHex      = require('crypto-js/enc-hex')
