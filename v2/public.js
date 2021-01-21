@@ -67,16 +67,16 @@ KunaPublic.prototype.request = function (url_api, method, postData) {
 
   return axios[method](url, postData, options)
     .then(({data}) => data )
-    .catch((error) => {
-      if (error.response != undefined) {
-        console.log('ERROR')
-        console.log(error)
+    // .catch((error) => {
+    //   if (error.response != undefined) {
+    //     console.log('ERROR')
+    //     console.log(error)
 
-      } else {
-        console.log('ERROR 2')
-        console.log(error)
-      }
-    })
+    //   } else {
+    //     console.log('ERROR 2')
+    //     console.log(error)
+    //   }
+    // })
 }
 
 module.exports = KunaPublic
