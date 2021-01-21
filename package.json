@@ -1,6 +1,5 @@
 {
   "_from": "kuna-api-sdk",
-  "_id": "kuna-api-sdk@2.0.0",
   "_inBundle": false,
   "_integrity": "sha512-Jxx8pNpJKvnotT/KdT2LVqSma4kwlL4XRSTKy4wyHdpZFyuGBh7YpWqLE7uaiXZaPH4MVKM3McJftdCRwjQm0g==",
   "_location": "/kuna-api-sdk",
@@ -24,7 +23,7 @@
   "_spec": "kuna-api-sdk",
   "_where": "D:\\CODING\\PROJECTS\\Kuna-api-sdk",
   "author": "",
-  "bundleDependencies": false,
+  "bundleDependencies": [],
   "dependencies": {
     "axios-https-proxy-fix": "^0.17.1",
     "crypto-js": "^3.1.9-1",
@@ -47,5 +46,5 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "2.1.3"
+  "version": "2.1.4"
 }
