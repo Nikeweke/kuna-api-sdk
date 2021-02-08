@@ -38,7 +38,7 @@
   },
   "homepage": "https://github.com/Nikeweke/kuna-api-sdk",
   "deprecated": false,
-  "description": "Kuna api sdk is here",
+  "description": "Kuna api sdk - V3, V2",
   "keywords": [],
   "license": "ISC",
   "main": "index.js",
