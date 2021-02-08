@@ -5,6 +5,7 @@
 
 const axios = require('axios-https-proxy-fix')
 const crypto = require('crypto');
+const sleep = (delay = 800) => new Promise((res) => setTimeout(res, delay))
 
 const KunaPublic = require('./public')
 
@@ -61,15 +62,17 @@ KunaPrivate.prototype.getActiveOrders = function (market) {
 }
 
 /**
- * Отменить ордер
- * @param {Object} order 
+ * Отменить ордер или ордера
+ * @param {Number, Array} order_ids 
  * @description https://docs.kuna.io/docs/%D0%BE%D1%82%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C-%D0%BE%D1%80%D0%B4%D0%B5%D1%80
  */
-KunaPrivate.prototype.cancelOrder = function (order_id) {
-  const url = `order/cancel` 
+KunaPrivate.prototype.cancelOrder = function (order_ids) {
+  // const url = `order/cancel` 
+  // const body = { order_id }
+  const url = `order/cancel/multi`
   const method = 'post'
-  const body = { order_id }
-  // const body = { order_id: [order_id] } // DOES NOT WORK if ARRAY
+  const body = { order_ids: Array.isArray(order_ids) ? order_ids : [order_ids] }
+
   return this.authedRequest(url, method, body)
 }
 
@@ -88,16 +91,14 @@ KunaPrivate.prototype.cancelAllOrders = function (market) {
 }
 
 KunaPrivate.prototype.cancelOrderBySide = async function(market, sign) {
-  const sleep = (delay = 800) => new Promise((res) => setTimeout(res, delay))
   const orders = await this.getActiveOrders(market)
-  if (orders.length === 0) return 
-  for (let order of orders) {
-    if (Math.sign(order[7]) === sign) {
-      await this.cancelOrder(order[0])
-      console.log(`order ${order[0]} cancelled`)
-      await sleep()
-    } 
-  }
+  if (!orders.length) return 
+
+  const ordersToCancel = orders.filter((item) => Math.sign(item[7]) === sign)
+  if (!ordersToCancel.length) return 
+    
+  const ordersIds = ordersToCancel.map((item) => item[0])
+  await this.cancelOrder(ordersIds)
 }
 // ===================================================================> EXPERIMENTAL
 
@@ -112,8 +113,6 @@ KunaPrivate.prototype.getAssetsHistory = function (type = '') {
   const method = 'post'
   return this.authedRequest(url, method)
 }
-
-
 
 /**
  * Список исполненных ордеров
@@ -195,9 +194,6 @@ KunaPrivate.prototype.getSignature = function(url_api, nonce, body) {
 
   return signature
 }
-
-
-
 
 
 module.exports = KunaPrivate
