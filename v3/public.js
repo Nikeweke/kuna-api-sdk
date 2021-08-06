@@ -64,6 +64,14 @@ KunaPublic.prototype.getFees = function() {
   return this.request('fees')
 }
 
+/**
+ * Check kuna-code
+ * @code {*} First 5 symbols from kuna code 
+ */
+KunaPublic.prototype.checkKunaCode = function(code) {
+  return this.request('kuna_codes/'+code+'/check')
+}
+
 
 /**
  * Сделать запрос

@@ -45,6 +45,7 @@
   "main": "index.js",
   "name": "kuna-api-sdk",
   "scripts": {
+    "kunacode": "node account.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "version": "2.1.6"
