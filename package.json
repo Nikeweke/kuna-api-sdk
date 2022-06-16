@@ -35,7 +35,7 @@
   "homepage": "https://github.com/Nikeweke/kuna-api-sdk",
   "deprecated": false,
   "description": "Kuna api sdk - V3, V2",
-  "keywords": [],
+  "keywords": [ "kuna", "cryptocurrency", "bitcoin" ],
   "license": "ISC",
   "main": "./dist/index.js",
   "name": "kuna-api-sdk",
