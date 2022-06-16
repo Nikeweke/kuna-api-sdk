@@ -18,16 +18,8 @@ interface IKunaApiV2 {
   private: KunaPrivateV2
 }
 
-
-interface ObjectOfString {
-  [key: string]: string
-}
-
-
-
 export {
   IKeys,
   IKunaApiV3,
   IKunaApiV2,
-  ObjectOfString,
 }

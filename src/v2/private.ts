@@ -6,7 +6,7 @@ import axios, { AxiosResponse, Method } from 'axios'
 import crypto from 'crypto'
 
 import KunaPublic from "./public"
-import { IKeys, ObjectOfString } from '../interfaces'
+import { IKeys } from '../interfaces'
 import { toQueryParams } from '../utils'
 
 type OrderSide = 'buy' | 'sell'

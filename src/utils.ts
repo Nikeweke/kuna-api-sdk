@@ -1,5 +1,3 @@
-import { ObjectOfString } from "./interfaces";
-
 /**
  * Get object and make it to query-params string
  * @param obj 
