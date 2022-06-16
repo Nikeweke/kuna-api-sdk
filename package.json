@@ -1,5 +1,5 @@
 {
-  "version": "3.0.1",
+  "version": "3.0.2",
   "_from": "kuna-api-sdk",
   "_inBundle": false,
   "_integrity": "sha512-Jxx8pNpJKvnotT/KdT2LVqSma4kwlL4XRSTKy4wyHdpZFyuGBh7YpWqLE7uaiXZaPH4MVKM3McJftdCRwjQm0g==",
@@ -35,7 +35,11 @@
   "homepage": "https://github.com/Nikeweke/kuna-api-sdk",
   "deprecated": false,
   "description": "Kuna api sdk - V3, V2",
-  "keywords": [ "kuna", "cryptocurrency", "bitcoin" ],
+  "keywords": [
+    "kuna",
+    "cryptocurrency",
+    "bitcoin"
+  ],
   "license": "ISC",
   "main": "./dist/index.js",
   "name": "kuna-api-sdk",
