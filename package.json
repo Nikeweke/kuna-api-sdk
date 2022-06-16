@@ -1,8 +1,44 @@
 {
-  "name": "just-ts",
-  "version": "1.0.0",
-  "description": "",
-  "main": "dist/index.js",
+  "version": "2.1.6",
+  "_from": "kuna-api-sdk",
+  "_inBundle": false,
+  "_integrity": "sha512-Jxx8pNpJKvnotT/KdT2LVqSma4kwlL4XRSTKy4wyHdpZFyuGBh7YpWqLE7uaiXZaPH4MVKM3McJftdCRwjQm0g==",
+  "_location": "/kuna-api-sdk",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "kuna-api-sdk",
+    "name": "kuna-api-sdk",
+    "escapedName": "kuna-api-sdk",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/kuna-api-sdk/-/kuna-api-sdk-1.0.2.tgz",
+  "_shasum": "4e026aba94c1520bd15662505501d06154ba81bc",
+  "_spec": "kuna-api-sdk",
+  "_where": "D:\\CODING\\PROJECTS\\Kuna-api-sdk",
+  "author": "",
+  "bundleDependencies": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Nikeweke/kuna-api-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Nikeweke/kuna-api-sdk/issues"
+  },
+  "homepage": "https://github.com/Nikeweke/kuna-api-sdk",
+  "deprecated": false,
+  "description": "Kuna api sdk - V3, V2",
+  "keywords": [],
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "name": "kuna-api-sdk",
   "scripts": {
     "build": "tsc",
     "dev": "ts-node ./src/interfaces.ts",
@@ -10,14 +46,11 @@
     "test-ns": "cross-env NODE_ENV=test jest --runInBand --verbose --bail",
     "test": "cross-env NODE_ENV=test jest --runInBand --verbose --bail --silent"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "@types/node": "^17.0.43",
     "axios": "^0.27.2"
   },
   "devDependencies": {
+    "@types/node": "^17.0.43",
     "@types/jest": "^28.1.1",
     "cross-env": "^7.0.3",
     "jest": "^28.1.1",
@@ -29,7 +62,12 @@
     "testMatch": [
       "**/__tests__/**/*.[jt]s?(x)"
     ],
-    "transform": {"^.+\\.ts?$": "ts-jest"},
+    "testPathIgnorePatterns": [
+      "<rootDir>/dist/"
+    ],
+    "transform": {
+      "^.+\\.ts?$": "ts-jest"
+    },
     "moduleFileExtensions": [
       "ts",
       "tsx",
