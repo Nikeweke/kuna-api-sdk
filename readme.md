@@ -9,21 +9,26 @@ const keys = {
 }
 
 // 2. you can use api V2 or V3 
-const kuna = require('kuna-api-sdk/v3')(keys)  // { public:..., private:... }
-const kunaV2 = require('kuna-api-sdk/v2')(keys) // { public:..., private:... }
+const kuna = require('./dist').v3(keys) // { public:..., private:... }
+const kunaV2 = require('./dist').v2(keys) // { public:..., private:... }
 
-kuna.public.getTickers('btcuah')
+// 3. use 
+kuna.public.getTicker('btcuah')
   .then((data) => console.log(data))
-  .catch(err => console.log('Error: ', err))
+  .catch(err => console.log('Error: ', err.message))
 
-kuna.private.accountInfo()
+kunaV2.public.getTicker('btcuah')
   .then((data) => console.log(data))
-  .catch(err => console.log('Error: ', err))
+  .catch(err => console.log('Error: ', err.message))
+
+// kuna.private.accountInfo()
+//   .then((data) => console.log(data))
+//   .catch(err => console.log('Error: ', err.message))
 ```
 
 ### API V2
 #### kuna.public.
-* `.getCurrency()` - Последние данные по рынку 
+* `.getTicker('btcuah')` - Последние данные по рынку 
 * `.getBirgaStakan()` - Биржевой стакан
 * `.getHistoryTrades()` -  История торгов
 * `.getUnixTime()` -  Забрать время Юникс
@@ -43,7 +48,7 @@ kuna.private.accountInfo()
 * `.getUnixTime()` - Забрать время Юникс
 * `.getCurrencies()` - Список доступных валют
 * `.getMarkets()` - Рынки
-* `.getTickers()` - Последние данные по рынку
+* `.getTicker('btcuah')` - Последние данные по рынку
 * `.getOrderBook()` - Биржевой стакан
 * `.getFees()` - Комиссии на ввод и вывод
 * `.request()` - Сделать запрос
