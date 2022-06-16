@@ -25,10 +25,6 @@ class KunaPrivate extends public_1.default {
         super();
         this.accessKey = '';
         this.secretKey = '';
-        this.tonce = 0;
-        this.query_params = '';
-        this.url_params = '';
-        this.signature = '';
         this.accessKey = publicKey;
         this.secretKey = secretKey;
     }

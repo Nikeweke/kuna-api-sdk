@@ -17,13 +17,22 @@ interface Order {
   volume: number
 }
 
+interface Asset {
+  currency: string
+  balance: string
+  locked: string
+}
+interface AccountInfo {
+  email: string
+  activated: boolean,
+  accounts: Array<Asset>
+}
+
+export { Asset, AccountInfo, OrderSide, Order }
+
 export default class KunaPrivate extends KunaPublic {
   private accessKey: string = '' 
   private secretKey: string = ''
-  private tonce: number     = 0      
-  private query_params: string = ''
-  private url_params: string   = ''
-  private signature: string    = ''
 
   constructor({publicKey = '', secretKey = ''}: IKeys) {
     super()
@@ -50,7 +59,7 @@ export default class KunaPrivate extends KunaPublic {
    * Info about user and assets
    * @description https://kuna.io/api/v2/members/me
    */
-  getInfoUser() {
+  getInfoUser() : Promise<AccountInfo> {
     const url = '/members/me'
     const method = 'GET'
     const params = {}
@@ -124,7 +133,7 @@ export default class KunaPrivate extends KunaPublic {
    * @param {Object} params
    * @param {Object} body
    */
-  async authedRequest(url_api: string, method: Method, params: Object, payload: Object = {}) : Promise<AxiosResponse> {
+  async authedRequest(url_api: string, method: Method, params: Object, payload: Object = {}) : Promise<any> {
     // nonce 
     const tonce = await this.getUnixTime()
     let queryParams = toQueryParams({

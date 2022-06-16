@@ -17,6 +17,28 @@ interface Order {
   price: number
 }
 
+interface AccountInfo {
+  email: string
+  kunaid: string
+  two_factor: boolean
+  withdraw_confirmation: boolean
+  send_order_notice: boolean
+  newsletter: boolean
+  send_withdraw_notice: boolean
+  send_signin_notice: boolean
+  public_keys: {
+    deposit_sdk_uah_public_key: string,
+    deposit_sdk_usd_public_key: string
+    deposit_sdk_rub_public_key: string
+    deposit_sdk_uah_worldwide_public_key: string
+  }
+  announcements: boolean
+  sn: string
+  activated: boolean
+  verifications: { status: string, identity: string | null }
+}
+
+export { AccountInfo }
 
 export default class KunaPrivate extends KunaPublic {
   private publicKey: string = '' 
@@ -31,7 +53,7 @@ export default class KunaPrivate extends KunaPublic {
   /**
    *  Get account info
    */
-  accountInfo() : Promise<any> {
+  accountInfo() : Promise<AccountInfo> {
     const url = 'auth/me'
     const method = 'post'
     return this.authedRequest(url, method)

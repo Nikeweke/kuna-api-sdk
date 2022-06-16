@@ -5,6 +5,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+src/jest/.env.jest
+
 # Runtime data
 pids
 *.pid
