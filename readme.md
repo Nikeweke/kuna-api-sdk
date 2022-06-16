@@ -27,6 +27,10 @@ kunaV2.public.getTicker('btcuah')
 kuna.private.accountInfo()
   .then((data) => console.log(data))
   .catch(err => console.log('Error: ', err.message))
+
+kunaV2.private.getInfoUser()
+  .then((data) => console.log(data))
+  .catch(err => console.log('Error: ', err.message))
 ```
 
 ### API V2
