@@ -1,15 +1,8 @@
 // 1. init a keys
-// const keys = {
-//   publicKey: 'XXXXXXXXXXXXXXXXXXXXXXXXX',
-//   secretKey: 'XXXXXXXXXXXXXXXXXXXXXXXXX',
-// }
-
 const keys = {
-  publicKey: '1LYTAdxCgCdqNsqmCeIVOxkWsJyrPqrqm8YTIhXj',
-  secretKey: 'KuWyBCT7Wm8OhTZrwa655UQY2aNkFtvj2eP5x0ll',
+  publicKey: 'XXXXXXXXXXXXXXXXXXXXXXXXX',
+  secretKey: 'XXXXXXXXXXXXXXXXXXXXXXXXX',
 }
-
-
 
 // 2. you can use api V2 or V3 
 const kuna = require('./dist').v3(keys) // { public:..., private:... }
