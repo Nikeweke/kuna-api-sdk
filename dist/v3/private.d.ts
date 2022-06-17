@@ -1,6 +1,6 @@
 import { Method } from "axios";
 import KunaPublic from "./public";
-import { IKeys } from '../interfaces';
+import { IKeys, KunaApiPrivate } from '../interfaces';
 declare type OrderType = 'limit' | 'market' | 'market_by_quote' | 'limit_stop_loss';
 interface Order {
     symbol: string;
@@ -32,14 +32,14 @@ interface AccountInfo {
     };
 }
 export { AccountInfo };
-export default class KunaPrivate extends KunaPublic {
+export default class KunaPrivate extends KunaPublic implements KunaApiPrivate {
     private publicKey;
     private secretKey;
     constructor({ publicKey, secretKey }: IKeys);
     /**
      *  Get account info
      */
-    accountInfo(): Promise<any>;
+    getAccountInfo(): Promise<AccountInfo>;
     /**
      * Account balance
      */
@@ -55,7 +55,7 @@ export default class KunaPrivate extends KunaPublic {
      * @param {String} market
      * @description https://docs.kuna.io/docs/%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C-%D0%BE%D1%80%D0%B4%D0%B5%D1%80-1
      */
-    getActiveOrders(market: string): Promise<any>;
+    getOrders(market: string): Promise<any>;
     /**
      * Cancel an order or orders
      * @param order_ids

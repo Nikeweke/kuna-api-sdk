@@ -46,7 +46,7 @@ class KunaPrivate extends public_1.default {
      * Info about user and assets
      * @description https://kuna.io/api/v2/members/me
      */
-    getInfoUser() {
+    getAccountInfo() {
         const url = '/members/me';
         const method = 'GET';
         const params = {};

@@ -4,8 +4,24 @@
 */
 
 import axios, { AxiosResponse, Method } from 'axios'
+import { KunaApiPublic } from '../interfaces'
 
-export default class KunaPublic {
+type Trend = 
+  | 'buy'
+  | 'sell'
+
+interface HistoryTradeItem {
+  id: number
+  price: string
+  volume: string
+  funds: string
+  market: string // btcuah, ...
+  created_at: string
+  side: null
+  trend: Trend
+}
+
+export default class KunaPublic implements KunaApiPublic {
   protected api: string  = 'https://kuna.io/api/v2'
 
   /**
@@ -47,14 +63,12 @@ export default class KunaPublic {
    * @param market
    * @description https://kuna.io/api/v2/trades?market=btcuah
    */
-  getHistoryTrades(market: string) : Promise<Array<Object>> {
+  getHistoryTrades(market: string) : Promise<Array<HistoryTradeItem>> {
     if (!market) {
       return Promise.reject('Set a pair of crypto (btcuah, ethuah)')
     }
     return this.request('/trades?market=' + market)
   }
-
-
 
   /**
    * Make an request 

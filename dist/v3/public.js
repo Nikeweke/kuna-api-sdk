@@ -13,7 +13,7 @@ class KunaPublic {
     }
     /**
      * Get unixtime
-    * @description https://kuna.io/api/v3/timestamp
+    * @description https://api.kuna.io/v3/timestamp
      */
     getUnixTime() {
         return this.request('timestamp').then((data) => data.timestamp_miliseconds);
@@ -53,6 +53,15 @@ class KunaPublic {
             return Promise.reject('Set a pair of crypto (btcuah, ethuah)');
         }
         return this.request('book/' + market);
+    }
+    /**
+     * @description Not implemented by KUNA API V3
+     * @param market
+     */
+    getHistoryTrades(market) {
+        return Promise.resolve([
+            { message: 'in kuna-api-v3 this action not implemented yet' }
+        ]);
     }
     /**
      * Fees for deposit and withdraws

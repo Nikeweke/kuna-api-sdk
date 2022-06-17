@@ -4,7 +4,7 @@
 */
 import { Method } from 'axios';
 import KunaPublic from "./public";
-import { IKeys } from '../interfaces';
+import { IKeys, KunaApiPrivate } from '../interfaces';
 declare type OrderSide = 'buy' | 'sell';
 interface Order {
     market: string;
@@ -23,7 +23,7 @@ interface AccountInfo {
     accounts: Array<Asset>;
 }
 export { Asset, AccountInfo, OrderSide, Order };
-export default class KunaPrivate extends KunaPublic {
+export default class KunaPrivate extends KunaPublic implements KunaApiPrivate {
     private accessKey;
     private secretKey;
     constructor({ publicKey, secretKey }: IKeys);
@@ -37,7 +37,7 @@ export default class KunaPrivate extends KunaPublic {
      * Info about user and assets
      * @description https://kuna.io/api/v2/members/me
      */
-    getInfoUser(): Promise<AccountInfo>;
+    getAccountInfo(): Promise<AccountInfo>;
     /**
      * Отмена ордера
      * @param order_id

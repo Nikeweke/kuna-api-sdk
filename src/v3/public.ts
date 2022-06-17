@@ -2,13 +2,14 @@
 *   API KUNA - V3 - public
 */
 import axios, { AxiosResponse, Method } from 'axios'
+import { KunaApiPublic } from '../interfaces'
 
-export default class KunaPublic {
+export default class KunaPublic implements KunaApiPublic {
   protected api: string = 'https://api.kuna.io/v3/'
 
   /**
    * Get unixtime
-  * @description https://kuna.io/api/v3/timestamp
+  * @description https://api.kuna.io/v3/timestamp
    */
   getUnixTime() : Promise<number> {
     return this.request('timestamp').then(
@@ -56,6 +57,15 @@ export default class KunaPublic {
     return this.request('book/' + market)
   }
 
+  /**
+   * @description Not implemented by KUNA API V3
+   * @param market
+   */
+  getHistoryTrades(market: string): Promise<Array<Object>> {
+    return Promise.resolve([
+      { message: 'in kuna-api-v3 this action not implemented yet'}
+    ])
+  }
 
   /**
    * Fees for deposit and withdraws

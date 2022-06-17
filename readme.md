@@ -36,14 +36,14 @@ kunaV2.private.getInfoUser()
 ### API V2
 #### kuna.public.
 * `.getTicker('btcuah')` - Последние данные по рынку 
-* `.getBirgaStakan()` - Биржевой стакан
-* `.getHistoryTrades()` -  История торгов
+* `.getOrderBook('btcuah')` - Биржевой стакан
+* `.getHistoryTrades('btcuah')` -  История торгов
 * `.getUnixTime()` -  Забрать время Юникс
 * `.request()` -  Сделать запрос
 
 #### kuna.private.
+* `.getAccountInfo()` -  Информация о пользователе и активах 
 * `.getOrders('btcuah')` - Активные ордера пользователя 
-* `.getInfoUser()` -  Информация о пользователе и активах 
 * `.cancelOrder(order_id)` - Отмена ордера
 * `.makeOrder({side, volume, market, price})` - Выставить ордер 
 * `.getTrades ('btcuah')` - История сделок пользователя 
@@ -61,10 +61,10 @@ kunaV2.private.getInfoUser()
 * `.request()` - Сделать запрос
 
 #### kuna.private.
-* `.accountInfo()` - Данные аккаунта
+* `.getAccountInfo()` - Данные аккаунта
 * `.accountBalance()` -  Баланс аккаунта 
 * `.createOrder({symbol, type, amount, price})` - Создать ордер
-* `.getActiveOrders(market)` - Список активных ордеров
+* `.getOrders('btcuah')` - Список активных ордеров
 * `.cancelOrder(order_id)` - Отменить ордер
 * `.getAssetsHistory(type)` -  Получить историю депозитов и выводов
 * `.getExecutedOrders(market)` -  Список исполненных ордеров

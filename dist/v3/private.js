@@ -26,7 +26,7 @@ class KunaPrivate extends public_1.default {
     /**
      *  Get account info
      */
-    accountInfo() {
+    getAccountInfo() {
         const url = 'auth/me';
         const method = 'post';
         return this.authedRequest(url, method);
@@ -54,7 +54,7 @@ class KunaPrivate extends public_1.default {
      * @param {String} market
      * @description https://docs.kuna.io/docs/%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C-%D0%BE%D1%80%D0%B4%D0%B5%D1%80-1
      */
-    getActiveOrders(market) {
+    getOrders(market) {
         const url = `auth/r/orders/${market}`;
         const method = 'post';
         return this.authedRequest(url, method);
@@ -106,7 +106,7 @@ class KunaPrivate extends public_1.default {
      */
     cancelOrderBySide(market, sign) {
         return __awaiter(this, void 0, void 0, function* () {
-            const orders = yield this.getActiveOrders(market);
+            const orders = yield this.getOrders(market);
             if (!orders.length)
                 return;
             const ordersToCancel = orders.filter((item) => Math.sign(item[7]) === sign);

@@ -2,11 +2,12 @@
 *   API KUNA - V3 - public
 */
 import { Method } from 'axios';
-export default class KunaPublic {
+import { KunaApiPublic } from '../interfaces';
+export default class KunaPublic implements KunaApiPublic {
     protected api: string;
     /**
      * Get unixtime
-    * @description https://kuna.io/api/v3/timestamp
+    * @description https://api.kuna.io/v3/timestamp
      */
     getUnixTime(): Promise<number>;
     /**
@@ -31,6 +32,11 @@ export default class KunaPublic {
      * @description https://api.kuna.io/v3/book/{symbol}
      */
     getOrderBook(market: string): Promise<any>;
+    /**
+     * @description Not implemented by KUNA API V3
+     * @param market
+     */
+    getHistoryTrades(market: string): Promise<Array<Object>>;
     /**
      * Fees for deposit and withdraws
      * @description https://api.kuna.io/v3/fees

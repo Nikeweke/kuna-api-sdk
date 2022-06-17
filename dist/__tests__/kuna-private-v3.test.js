@@ -17,11 +17,10 @@ const KEYS = {
     publicKey: process.env.KUNA_PUBLIC_KEY || '',
     secretKey: process.env.KUNA_SECRET_KEY || '',
 };
-describe('Kuna.private v2:', () => {
+describe('Kuna.private v3:', () => {
     test('Get account info', () => __awaiter(void 0, void 0, void 0, function* () {
         const api = new private_1.default(KEYS);
-        const data = yield api.accountInfo();
-        console.log(data);
+        const data = yield api.getAccountInfo();
         expect(data.email).toBeDefined();
         expect(data.activated).toBe(true);
     }));

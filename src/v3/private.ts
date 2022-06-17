@@ -2,7 +2,7 @@ import axios, { Method, AxiosResponse, AxiosRequestHeaders } from "axios"
 import crypto from 'crypto'
 
 import KunaPublic from "./public"
-import { IKeys } from '../interfaces'
+import { IKeys, KunaApiPrivate } from '../interfaces'
 
 type OrderType = 
   | 'limit'
@@ -40,7 +40,7 @@ interface AccountInfo {
 
 export { AccountInfo }
 
-export default class KunaPrivate extends KunaPublic {
+export default class KunaPrivate extends KunaPublic implements KunaApiPrivate {
   private publicKey: string = '' 
   private secretKey: string = ''
 
@@ -53,7 +53,7 @@ export default class KunaPrivate extends KunaPublic {
   /**
    *  Get account info
    */
-  accountInfo() : Promise<AccountInfo> {
+  getAccountInfo() : Promise<AccountInfo> {
     const url = 'auth/me'
     const method = 'post'
     return this.authedRequest(url, method)
@@ -85,7 +85,7 @@ export default class KunaPrivate extends KunaPublic {
    * @param {String} market 
    * @description https://docs.kuna.io/docs/%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C-%D0%BE%D1%80%D0%B4%D0%B5%D1%80-1
    */
-  getActiveOrders(market: string) : Promise<any> {
+  getOrders(market: string) : Promise<any> {
     const url = `auth/r/orders/${market}` 
     const method = 'post'
     return this.authedRequest(url, method)
@@ -143,7 +143,7 @@ export default class KunaPrivate extends KunaPublic {
    * @returns 
    */
   async cancelOrderBySide(market: string, sign: number) : Promise<any> {
-    const orders = await this.getActiveOrders(market)
+    const orders = await this.getOrders(market)
     if (!orders.length) return 
 
     const ordersToCancel = orders.filter(

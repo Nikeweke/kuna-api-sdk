@@ -6,7 +6,7 @@ import axios, { AxiosResponse, Method } from 'axios'
 import crypto from 'crypto'
 
 import KunaPublic from "./public"
-import { IKeys } from '../interfaces'
+import { IKeys, KunaApiPrivate } from '../interfaces'
 import { toQueryParams } from '../utils'
 
 type OrderSide = 'buy' | 'sell'
@@ -30,7 +30,7 @@ interface AccountInfo {
 
 export { Asset, AccountInfo, OrderSide, Order }
 
-export default class KunaPrivate extends KunaPublic {
+export default class KunaPrivate extends KunaPublic implements KunaApiPrivate {
   private accessKey: string = '' 
   private secretKey: string = ''
 
@@ -59,7 +59,7 @@ export default class KunaPrivate extends KunaPublic {
    * Info about user and assets
    * @description https://kuna.io/api/v2/members/me
    */
-  getInfoUser() : Promise<AccountInfo> {
+  getAccountInfo() : Promise<AccountInfo> {
     const url = '/members/me'
     const method = 'GET'
     const params = {}

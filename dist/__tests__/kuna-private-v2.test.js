@@ -20,7 +20,7 @@ const KEYS = {
 describe('Kuna.private v2:', () => {
     test('Get account info', () => __awaiter(void 0, void 0, void 0, function* () {
         const api = new private_1.default(KEYS);
-        const data = yield api.getInfoUser();
+        const data = yield api.getAccountInfo();
         expect(data.email).toBeDefined();
         expect(data.activated).toBe(true);
     }));

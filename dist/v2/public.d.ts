@@ -3,7 +3,19 @@
 *
 */
 import { Method } from 'axios';
-export default class KunaPublic {
+import { KunaApiPublic } from '../interfaces';
+declare type Trend = 'buy' | 'sell';
+interface HistoryTradeItem {
+    id: number;
+    price: string;
+    volume: string;
+    funds: string;
+    market: string;
+    created_at: string;
+    side: null;
+    trend: Trend;
+}
+export default class KunaPublic implements KunaApiPublic {
     protected api: string;
     /**
      * Get unixtime
@@ -27,7 +39,7 @@ export default class KunaPublic {
      * @param market
      * @description https://kuna.io/api/v2/trades?market=btcuah
      */
-    getHistoryTrades(market: string): Promise<Array<Object>>;
+    getHistoryTrades(market: string): Promise<Array<HistoryTradeItem>>;
     /**
      * Make an request
      * @param url_api
@@ -36,3 +48,4 @@ export default class KunaPublic {
      */
     request(url_api: string, method?: Method, payload?: object): Promise<any>;
 }
+export {};
