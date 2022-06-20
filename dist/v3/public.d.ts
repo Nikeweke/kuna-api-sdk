@@ -1,7 +1,7 @@
 /**
 *   API KUNA - V3 - public
 */
-import { Method } from 'axios';
+import { AxiosRequestConfig } from 'axios';
 import { KunaApiPublic } from '../interfaces';
 export default class KunaPublic implements KunaApiPublic {
     protected api: string;
@@ -42,5 +42,9 @@ export default class KunaPublic implements KunaApiPublic {
      * @description https://api.kuna.io/v3/fees
      */
     getFees(): Promise<any>;
-    request(url_api: string, method?: Method, payload?: object): Promise<any>;
+    /**
+     * Make a request
+     * @param requestConfig AxiosRequestConfig
+     */
+    request(requestConfig: AxiosRequestConfig): Promise<any>;
 }

@@ -1,7 +1,7 @@
 /**
 *   API KUNA - V3 - public
 */
-import axios, { AxiosResponse, Method } from 'axios'
+import axios, { AxiosResponse, Method, AxiosRequestConfig } from 'axios'
 import { KunaApiPublic } from '../interfaces'
 
 export default class KunaPublic implements KunaApiPublic {
@@ -12,7 +12,11 @@ export default class KunaPublic implements KunaApiPublic {
   * @description https://api.kuna.io/v3/timestamp
    */
   getUnixTime() : Promise<number> {
-    return this.request('timestamp').then(
+    return this.request({
+      url: 'timestamp',
+      method: 'GET',
+      params: { },
+    }).then(
       (data) => data.timestamp_miliseconds
     )
   }
@@ -22,7 +26,11 @@ export default class KunaPublic implements KunaApiPublic {
    * @description https://api.kuna.io/v3/currencies
    */
   getCurrencies() : Promise<any> {
-    return this.request(`currencies`)
+    return this.request({
+      url: 'currencies',
+      method: 'GET',
+      params: { },
+    })
   }
 
   /**
@@ -30,7 +38,11 @@ export default class KunaPublic implements KunaApiPublic {
    * @description https://api.kuna.io/v3/markets
    */
   getMarkets() : Promise<any> {
-    return this.request(`markets`)
+    return this.request({
+      url: 'markets',
+      method: 'GET',
+      params: { },
+    })
   }
 
   /**
@@ -42,7 +54,11 @@ export default class KunaPublic implements KunaApiPublic {
     if (!market) {
       return Promise.reject('Set a pair of crypto (btcuah, ethuah)')
     }
-    return this.request(`tickers?symbols=${market}`)
+    return this.request({
+      url: `tickers?symbols=${market}`,
+      method: 'GET',
+      params: { },
+    })
   }
 
   /**
@@ -54,7 +70,11 @@ export default class KunaPublic implements KunaApiPublic {
     if (!market) {
       return Promise.reject('Set a pair of crypto (btcuah, ethuah)')
     }
-    return this.request('book/' + market)
+    return this.request({
+      url: 'book/' + market,
+      method: 'GET',
+      params: { },
+    })
   }
 
   /**
@@ -72,13 +92,22 @@ export default class KunaPublic implements KunaApiPublic {
    * @description https://api.kuna.io/v3/fees
    */
   getFees() : Promise<any> {
-    return this.request('fees')
+    return this.request({
+      url: 'fees',
+      method: 'GET',
+      params: { },
+    })
+
   }
 
-  request(url_api: string, method: Method = 'GET', payload: object = {}) : Promise<any> {
-    const url = this.api + url_api
+  /**
+   * Make a request
+   * @param requestConfig AxiosRequestConfig
+   */
+   request(requestConfig: AxiosRequestConfig) : Promise<any> {
+    requestConfig.url = this.api + requestConfig.url
     return axios
-      .request({ url, method, data: payload })
-      .then((res: AxiosResponse) => res.data)
+      .request(requestConfig)
+      .then((r: AxiosResponse) => r.data)
   }
 }

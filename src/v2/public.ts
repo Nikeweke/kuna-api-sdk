@@ -3,7 +3,7 @@
 *
 */
 
-import axios, { AxiosResponse, Method } from 'axios'
+import axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
 import { KunaApiPublic } from '../interfaces'
 
 type Trend = 
@@ -29,9 +29,12 @@ export default class KunaPublic implements KunaApiPublic {
    * @description https://kuna.io/api/v2/timestamp
    */
   getUnixTime() : Promise<string> {
-    return this
-      .request('/timestamp')
-      .then((unixTime: Number) => unixTime + '000')
+    return this.request({
+      url: '/timestamp',
+      method: 'GET',
+      params: { },
+    })
+    .then((unixTime: Number) => unixTime + '000')
   }
 
   /**
@@ -43,7 +46,12 @@ export default class KunaPublic implements KunaApiPublic {
     if (!market) {
       return Promise.reject('Set a pair of crypto (btcuah, ethuah)')
     }
-    return this.request('/tickers/' + market).then(({ticker}) => ticker)
+    return this.request({
+      url: '/tickers/' + market,
+      method: 'GET',
+      params: { },
+    })
+    .then(({ticker}) => ticker)
   }
 
   /**
@@ -55,7 +63,11 @@ export default class KunaPublic implements KunaApiPublic {
     if (!market) {
       return Promise.reject('Set a pair of crypto (btcuah, ethuah)')
     }
-    return this.request('/order_book?market=' + market)
+    return this.request({
+      url: '/order_book?market=' + market,
+      method: 'GET',
+      params: { },
+    })
   }
 
   /**
@@ -67,20 +79,22 @@ export default class KunaPublic implements KunaApiPublic {
     if (!market) {
       return Promise.reject('Set a pair of crypto (btcuah, ethuah)')
     }
-    return this.request('/trades?market=' + market)
+    return this.request({
+      url: '/trades?market=' + market,
+      method: 'GET',
+      params: { },
+    })
   }
 
   /**
-   * Make an request 
-   * @param url_api
-   * @param method
-   * @param payload
+   * Make a request
+   * @param requestConfig AxiosRequestConfig
    */
-  request(url_api: string, method: Method = 'GET', payload: object = {}) : Promise<any> {
-    const url = this.api + url_api
+  request(requestConfig: AxiosRequestConfig) : Promise<any> {
+    requestConfig.url = this.api + requestConfig.url
     return axios
-      .request({ url, method, data: payload })
-      .then((res: AxiosResponse) => res.data)
+      .request(requestConfig)
+      .then((r: AxiosResponse) => r.data)
   }
 }
 

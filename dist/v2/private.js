@@ -12,11 +12,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-/**
-*   API KUNA - V2 - private
-*
-*/
-const axios_1 = __importDefault(require("axios"));
 const crypto_1 = __importDefault(require("crypto"));
 const public_1 = __importDefault(require("./public"));
 const utils_1 = require("../utils");
@@ -37,20 +32,22 @@ class KunaPrivate extends public_1.default {
         if (!market) {
             return Promise.reject('Pass a pair of crypto (btcuah, ethuah)');
         }
-        const url = '/orders';
-        const method = 'GET';
-        const params = { market };
-        return this.authedRequest(url, method, params);
+        return this.addAuth({
+            url: '/orders',
+            method: 'GET',
+            params: { market },
+        }).then(this.request.bind(this));
     }
     /**
      * Info about user and assets
      * @description https://kuna.io/api/v2/members/me
      */
     getAccountInfo() {
-        const url = '/members/me';
-        const method = 'GET';
-        const params = {};
-        return this.authedRequest(url, method, params);
+        return this.addAuth({
+            url: '/members/me',
+            method: 'GET',
+            params: {},
+        }).then(this.request.bind(this));
     }
     /**
      * Отмена ордера
@@ -58,10 +55,11 @@ class KunaPrivate extends public_1.default {
      * @description {POST} https://kuna.io/api/v2/order/delete
      */
     cancelOrder(order_id) {
-        const url = '/order/delete';
-        const method = 'POST';
-        const params = { id: order_id };
-        return this.authedRequest(url, method, params);
+        return this.addAuth({
+            url: '/order/delete',
+            method: 'POST',
+            params: { id: order_id },
+        }).then(this.request.bind(this));
     }
     /**
      * Create an order
@@ -73,11 +71,12 @@ class KunaPrivate extends public_1.default {
      * @description {POST} https://kuna.io/api/v2/orders
      */
     makeOrder(order) {
-        const url = '/orders';
-        const method = 'POST';
-        const params = Object.assign({}, order);
-        const body = order;
-        return this.authedRequest(url, method, params, body);
+        return this.addAuth({
+            url: '/orders',
+            method: 'POST',
+            params: order,
+            data: order,
+        }).then(this.request.bind(this));
     }
     /**
      * Trades history
@@ -88,10 +87,11 @@ class KunaPrivate extends public_1.default {
         if (!market) {
             return Promise.reject('Pass a pair of crypto (btcuah, ethuah)');
         }
-        const url = '/trades/my';
-        const method = 'GET';
-        const params = { market };
-        return this.authedRequest(url, method, params);
+        return this.addAuth({
+            url: '/trades/my',
+            method: 'GET',
+            params: { market },
+        }).then(this.request.bind(this));
     }
     /**
      * Get signature
@@ -106,30 +106,18 @@ class KunaPrivate extends public_1.default {
             .update(signatureString)
             .digest('hex');
     }
-    /**
-     * Make an authed request
-     * @param {String} url_api
-     * @param {String} method
-     * @param {Object} params
-     * @param {Object} body
-     */
-    authedRequest(url_api, method, params, payload = {}) {
+    addAuth(requestConfig) {
         return __awaiter(this, void 0, void 0, function* () {
+            const { params, url, method } = requestConfig;
             // nonce 
             const tonce = yield this.getUnixTime();
             let queryParams = (0, utils_1.toQueryParams)(Object.assign({ access_key: this.accessKey, tonce }, params));
             // signature
-            const signature = this.getSignature(method, url_api, queryParams);
+            const signature = this.getSignature(method, url, queryParams);
             queryParams += `&signature=${signature}`;
             // preparing axios request
-            const url = `${this.api}${url_api}?${queryParams}`;
-            return axios_1.default
-                .request({
-                url,
-                method,
-                data: payload,
-            })
-                .then((res) => res.data);
+            requestConfig.url = `${url}?${queryParams}`;
+            return requestConfig;
         });
     }
 }

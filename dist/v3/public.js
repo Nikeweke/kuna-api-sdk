@@ -16,21 +16,33 @@ class KunaPublic {
     * @description https://api.kuna.io/v3/timestamp
      */
     getUnixTime() {
-        return this.request('timestamp').then((data) => data.timestamp_miliseconds);
+        return this.request({
+            url: 'timestamp',
+            method: 'GET',
+            params: {},
+        }).then((data) => data.timestamp_miliseconds);
     }
     /**
      * List of available currencies
      * @description https://api.kuna.io/v3/currencies
      */
     getCurrencies() {
-        return this.request(`currencies`);
+        return this.request({
+            url: 'currencies',
+            method: 'GET',
+            params: {},
+        });
     }
     /**
      * Markets
      * @description https://api.kuna.io/v3/markets
      */
     getMarkets() {
-        return this.request(`markets`);
+        return this.request({
+            url: 'markets',
+            method: 'GET',
+            params: {},
+        });
     }
     /**
      * Ticker for market
@@ -41,7 +53,11 @@ class KunaPublic {
         if (!market) {
             return Promise.reject('Set a pair of crypto (btcuah, ethuah)');
         }
-        return this.request(`tickers?symbols=${market}`);
+        return this.request({
+            url: `tickers?symbols=${market}`,
+            method: 'GET',
+            params: {},
+        });
     }
     /**
      * Order book
@@ -52,7 +68,11 @@ class KunaPublic {
         if (!market) {
             return Promise.reject('Set a pair of crypto (btcuah, ethuah)');
         }
-        return this.request('book/' + market);
+        return this.request({
+            url: 'book/' + market,
+            method: 'GET',
+            params: {},
+        });
     }
     /**
      * @description Not implemented by KUNA API V3
@@ -68,13 +88,21 @@ class KunaPublic {
      * @description https://api.kuna.io/v3/fees
      */
     getFees() {
-        return this.request('fees');
+        return this.request({
+            url: 'fees',
+            method: 'GET',
+            params: {},
+        });
     }
-    request(url_api, method = 'GET', payload = {}) {
-        const url = this.api + url_api;
+    /**
+     * Make a request
+     * @param requestConfig AxiosRequestConfig
+     */
+    request(requestConfig) {
+        requestConfig.url = this.api + requestConfig.url;
         return axios_1.default
-            .request({ url, method, data: payload })
-            .then((res) => res.data);
+            .request(requestConfig)
+            .then((r) => r.data);
     }
 }
 exports.default = KunaPublic;

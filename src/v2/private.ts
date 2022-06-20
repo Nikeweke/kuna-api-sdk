@@ -2,7 +2,7 @@
 *   API KUNA - V2 - private
 *
 */
-import axios, { AxiosResponse, Method } from 'axios'
+import { AxiosRequestConfig, Method } from 'axios'
 import crypto from 'crypto'
 
 import KunaPublic from "./public"
@@ -49,10 +49,11 @@ export default class KunaPrivate extends KunaPublic implements KunaApiPrivate {
     if (!market) {
       return Promise.reject('Pass a pair of crypto (btcuah, ethuah)')
     }
-    const url = '/orders'
-    const method = 'GET'
-    const params = { market }
-    return this.authedRequest(url, method, params)
+    return this.addAuth({
+      url: '/orders',
+      method: 'GET',
+      params: { market },
+    }).then(this.request.bind(this))
   }
 
   /**
@@ -60,10 +61,11 @@ export default class KunaPrivate extends KunaPublic implements KunaApiPrivate {
    * @description https://kuna.io/api/v2/members/me
    */
   getAccountInfo() : Promise<AccountInfo> {
-    const url = '/members/me'
-    const method = 'GET'
-    const params = {}
-    return this.authedRequest(url, method, params)
+    return this.addAuth({
+      url: '/members/me',
+      method: 'GET',
+      params: {},
+    }).then(this.request.bind(this))
   }
 
 
@@ -73,10 +75,11 @@ export default class KunaPrivate extends KunaPublic implements KunaApiPrivate {
    * @description {POST} https://kuna.io/api/v2/order/delete
    */
   cancelOrder(order_id: number) {
-    const url = '/order/delete'
-    const method = 'POST'
-    const params = {id: order_id}
-    return this.authedRequest(url, method, params)
+    return this.addAuth({
+      url: '/order/delete',
+      method: 'POST',
+      params: {id: order_id},
+    }).then(this.request.bind(this))
   }
 
 
@@ -89,12 +92,13 @@ export default class KunaPrivate extends KunaPublic implements KunaApiPrivate {
    * @param  price — цена за один биткоин
    * @description {POST} https://kuna.io/api/v2/orders
    */
-  makeOrder(order: Order) {
-    const url = '/orders'
-    const method = 'POST'
-    const params = { ...order }
-    const body = order
-    return this.authedRequest(url, method, params, body)
+  makeOrder(order: Order) : Promise<any> {
+    return this.addAuth({
+      url: '/orders',
+      method: 'POST',
+      params: order,
+      data: order,
+    }).then(this.request.bind(this))
   }
 
   /**
@@ -106,10 +110,11 @@ export default class KunaPrivate extends KunaPublic implements KunaApiPrivate {
     if (!market) {
       return Promise.reject('Pass a pair of crypto (btcuah, ethuah)')
     }
-    const url = '/trades/my'
-    const method = 'GET'
-    const params = { market }
-    return this.authedRequest(url, method, params)
+    return this.addAuth({
+      url: '/trades/my',
+      method: 'GET',
+      params: { market },
+    }).then(this.request.bind(this))
   }
 
   /**
@@ -118,7 +123,7 @@ export default class KunaPrivate extends KunaPublic implements KunaApiPrivate {
    * @param nonce
    * @param body
    */
-  getSignature(method: Method, url: string, queryParams: string) {
+  getSignature(method: Method, url: string, queryParams: string) : string {
     const signatureString = `${method}|/api/v2${url}|${queryParams}`;
     return crypto
       .createHmac('sha256', this.secretKey)
@@ -126,14 +131,9 @@ export default class KunaPrivate extends KunaPublic implements KunaApiPrivate {
       .digest('hex');
   }
 
-  /**
-   * Make an authed request
-   * @param {String} url_api
-   * @param {String} method
-   * @param {Object} params
-   * @param {Object} body
-   */
-  async authedRequest(url_api: string, method: Method, params: Object, payload: Object = {}) : Promise<any> {
+  async addAuth(requestConfig: AxiosRequestConfig) : Promise<AxiosRequestConfig> {
+    const { params, url, method } = requestConfig
+
     // nonce 
     const tonce = await this.getUnixTime()
     let queryParams = toQueryParams({
@@ -143,19 +143,13 @@ export default class KunaPrivate extends KunaPublic implements KunaApiPrivate {
     })
 
     // signature
-    const signature = this.getSignature(method, url_api, queryParams)
+    const signature = this.getSignature(method as Method, url as string, queryParams)
     queryParams += `&signature=${signature}`
 
     // preparing axios request
-    const url = `${this.api}${url_api}?${queryParams}`
+    requestConfig.url = `${url}?${queryParams}`
 
-    return axios
-      .request({
-        url,
-        method,
-        data: payload,
-      })
-      .then((res: AxiosResponse) => res.data)
+    return requestConfig
   }
 }
 

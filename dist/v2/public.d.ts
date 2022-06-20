@@ -2,7 +2,7 @@
 *   API KUNA - V2 - public
 *
 */
-import { Method } from 'axios';
+import { AxiosRequestConfig } from 'axios';
 import { KunaApiPublic } from '../interfaces';
 declare type Trend = 'buy' | 'sell';
 interface HistoryTradeItem {
@@ -41,11 +41,9 @@ export default class KunaPublic implements KunaApiPublic {
      */
     getHistoryTrades(market: string): Promise<Array<HistoryTradeItem>>;
     /**
-     * Make an request
-     * @param url_api
-     * @param method
-     * @param payload
+     * Make a request
+     * @param requestConfig AxiosRequestConfig
      */
-    request(url_api: string, method?: Method, payload?: object): Promise<any>;
+    request(requestConfig: AxiosRequestConfig): Promise<any>;
 }
 export {};

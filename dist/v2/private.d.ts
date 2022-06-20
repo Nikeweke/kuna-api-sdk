@@ -2,7 +2,7 @@
 *   API KUNA - V2 - private
 *
 */
-import { Method } from 'axios';
+import { AxiosRequestConfig, Method } from 'axios';
 import KunaPublic from "./public";
 import { IKeys, KunaApiPrivate } from '../interfaces';
 declare type OrderSide = 'buy' | 'sell';
@@ -67,12 +67,5 @@ export default class KunaPrivate extends KunaPublic implements KunaApiPrivate {
      * @param body
      */
     getSignature(method: Method, url: string, queryParams: string): string;
-    /**
-     * Make an authed request
-     * @param {String} url_api
-     * @param {String} method
-     * @param {Object} params
-     * @param {Object} body
-     */
-    authedRequest(url_api: string, method: Method, params: Object, payload?: Object): Promise<any>;
+    addAuth(requestConfig: AxiosRequestConfig): Promise<AxiosRequestConfig>;
 }

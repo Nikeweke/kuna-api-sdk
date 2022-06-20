@@ -1,4 +1,4 @@
-import axios, { Method, AxiosResponse, AxiosRequestHeaders } from "axios"
+import axios, { Method, AxiosResponse, AxiosRequestHeaders, AxiosRequestConfig } from "axios"
 import crypto from 'crypto'
 
 import KunaPublic from "./public"
@@ -54,18 +54,22 @@ export default class KunaPrivate extends KunaPublic implements KunaApiPrivate {
    *  Get account info
    */
   getAccountInfo() : Promise<AccountInfo> {
-    const url = 'auth/me'
-    const method = 'post'
-    return this.authedRequest(url, method)
+    return this.addAuth({
+      url: `auth/me`,
+      method: 'post',
+      data: {},
+    }).then(this.request.bind(this))
   }
 
   /**
    * Account balance
    */
   accountBalance() : Promise<any> {
-    const url = 'auth/r/wallets' 
-    const method = 'post'
-    return this.authedRequest(url, method)
+    return this.addAuth({
+      url: `auth/r/wallets`,
+      method: 'post',
+      data: {},
+    }).then(this.request.bind(this))
   }
 
   
@@ -75,9 +79,11 @@ export default class KunaPrivate extends KunaPublic implements KunaApiPrivate {
    * @description https://docs.kuna.io/docs/%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C-%D0%BE%D1%80%D0%B4%D0%B5%D1%80-1
    */
   createOrder(order: Order) : Promise<any> {
-    const url = 'auth/w/order/submit' 
-    const method = 'post'
-    return this.authedRequest(url, method, order)
+    return this.addAuth({
+      url: `auth/w/order/submit`,
+      method: 'post',
+      data: order
+    }).then(this.request.bind(this))
   }
 
   /**
@@ -86,9 +92,11 @@ export default class KunaPrivate extends KunaPublic implements KunaApiPrivate {
    * @description https://docs.kuna.io/docs/%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C-%D0%BE%D1%80%D0%B4%D0%B5%D1%80-1
    */
   getOrders(market: string) : Promise<any> {
-    const url = `auth/r/orders/${market}` 
-    const method = 'post'
-    return this.authedRequest(url, method)
+    return this.addAuth({
+      url: `auth/r/orders/${market}`,
+      method: 'post',
+      data: {},
+    }).then(this.request.bind(this))
   }
 
   /**
@@ -97,13 +105,11 @@ export default class KunaPrivate extends KunaPublic implements KunaApiPrivate {
    * @description https://docs.kuna.io/docs/%D0%BE%D1%82%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C-%D0%BE%D1%80%D0%B4%D0%B5%D1%80
    */
   cancelOrder(order_ids: Number | Array<Number>) : Promise<any> {
-    // const url = `order/cancel` 
-    // const body = { order_id }
-    const url = `order/cancel/multi`
-    const method = 'post'
-    const body = { order_ids: Array.isArray(order_ids) ? order_ids : [order_ids] }
-
-    return this.authedRequest(url, method, body)
+    return this.addAuth({
+      url: `order/cancel/multi`,
+      method: 'post',
+      data: { order_ids: Array.isArray(order_ids) ? order_ids : [order_ids] }
+    }).then(this.request.bind(this))
   }
 
   
@@ -165,9 +171,11 @@ export default class KunaPrivate extends KunaPublic implements KunaApiPrivate {
    */
   getAssetsHistory(type: string = '') : Promise<any> {
     if (type) type = '/' + type
-    const url = `auth/assets-history` + type 
-    const method = 'post'
-    return this.authedRequest(url, method)
+    return this.addAuth({
+      url: `auth/assets-history${type}`,
+      method: 'post',
+      data: {},
+    }).then(this.request.bind(this))
   }
 
   /**
@@ -176,9 +184,11 @@ export default class KunaPrivate extends KunaPublic implements KunaApiPrivate {
    * @description https://docs.kuna.io/docs/%D1%81%D0%BF%D0%B8%D1%81%D0%BE%D0%BA-%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%BD%D1%8B%D1%85-%D0%BE%D1%80%D0%B4%D0%B5%D1%80%D0%BE%D0%B2
    */
   getExecutedOrders(market: string) : Promise<any> {
-    const url = `auth/r/orders/${market}/hist`
-    const method = 'post'
-    return this.authedRequest(url, method)
+    return this.addAuth({
+      url: `auth/r/orders/${market}/hist`,
+      method: 'post',
+      data: {},
+    }).then(this.request.bind(this))
   }
 
   /**
@@ -188,9 +198,11 @@ export default class KunaPrivate extends KunaPublic implements KunaApiPrivate {
    * @description https://docs.kuna.io/docs/%D1%81%D0%BF%D0%B8%D1%81%D0%BE%D0%BA-%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%BD%D1%8B%D1%85-%D0%BE%D1%80%D0%B4%D0%B5%D1%80%D0%BE%D0%B2
    */
   getTradesByOrderId(market: string, order_id: string) : Promise<any> {
-    const url = `auth/r/order/${market}:${order_id}/trades`
-    const method = 'post'
-    return this.authedRequest(url, method)
+    return this.addAuth({
+      url: `auth/r/order/${market}:${order_id}/trades`,
+      method: 'post',
+      data: {},
+    }).then(this.request.bind(this))
   }
 
   /**
@@ -215,24 +227,16 @@ export default class KunaPrivate extends KunaPublic implements KunaApiPrivate {
    * @param {String} method http-method (post, put, delete, ...)
    * @param {Object} payload
    */
-  async authedRequest(url_api: string, method: Method = 'GET', payload: object = {}) : Promise<any> {
-    const url = this.api + url_api
+  async addAuth(requestConfig: AxiosRequestConfig) : Promise<AxiosRequestConfig> {
     const nonce = await this.getUnixTime()
-    const signature = this.getSignature(url_api, nonce, payload)
-    const headers = <AxiosRequestHeaders>({
+    const signature = this.getSignature(requestConfig.url as string, nonce, requestConfig.data)
+    requestConfig.headers = <AxiosRequestHeaders>({
       'kun-nonce': nonce,
       'kun-apikey': this.publicKey,
       'kun-signature': signature,
       'accept': 'application/json',
     })
-    return axios
-      .request({
-        url,
-        method,
-        data: payload,
-        headers,
-      })
-      .then((res: AxiosResponse) => res.data)
+    return requestConfig
   }
 }
 

@@ -1,4 +1,4 @@
-import { Method } from "axios";
+import { AxiosRequestConfig } from "axios";
 import KunaPublic from "./public";
 import { IKeys, KunaApiPrivate } from '../interfaces';
 declare type OrderType = 'limit' | 'market' | 'market_by_quote' | 'limit_stop_loss';
@@ -119,5 +119,5 @@ export default class KunaPrivate extends KunaPublic implements KunaApiPrivate {
      * @param {String} method http-method (post, put, delete, ...)
      * @param {Object} payload
      */
-    authedRequest(url_api: string, method?: Method, payload?: object): Promise<any>;
+    addAuth(requestConfig: AxiosRequestConfig): Promise<AxiosRequestConfig>;
 }

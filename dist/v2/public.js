@@ -17,8 +17,11 @@ class KunaPublic {
      * @description https://kuna.io/api/v2/timestamp
      */
     getUnixTime() {
-        return this
-            .request('/timestamp')
+        return this.request({
+            url: '/timestamp',
+            method: 'GET',
+            params: {},
+        })
             .then((unixTime) => unixTime + '000');
     }
     /**
@@ -30,7 +33,12 @@ class KunaPublic {
         if (!market) {
             return Promise.reject('Set a pair of crypto (btcuah, ethuah)');
         }
-        return this.request('/tickers/' + market).then(({ ticker }) => ticker);
+        return this.request({
+            url: '/tickers/' + market,
+            method: 'GET',
+            params: {},
+        })
+            .then(({ ticker }) => ticker);
     }
     /**
      * Order book
@@ -41,7 +49,11 @@ class KunaPublic {
         if (!market) {
             return Promise.reject('Set a pair of crypto (btcuah, ethuah)');
         }
-        return this.request('/order_book?market=' + market);
+        return this.request({
+            url: '/order_book?market=' + market,
+            method: 'GET',
+            params: {},
+        });
     }
     /**
      * History trades
@@ -52,19 +64,21 @@ class KunaPublic {
         if (!market) {
             return Promise.reject('Set a pair of crypto (btcuah, ethuah)');
         }
-        return this.request('/trades?market=' + market);
+        return this.request({
+            url: '/trades?market=' + market,
+            method: 'GET',
+            params: {},
+        });
     }
     /**
-     * Make an request
-     * @param url_api
-     * @param method
-     * @param payload
+     * Make a request
+     * @param requestConfig AxiosRequestConfig
      */
-    request(url_api, method = 'GET', payload = {}) {
-        const url = this.api + url_api;
+    request(requestConfig) {
+        requestConfig.url = this.api + requestConfig.url;
         return axios_1.default
-            .request({ url, method, data: payload })
-            .then((res) => res.data);
+            .request(requestConfig)
+            .then((r) => r.data);
     }
 }
 exports.default = KunaPublic;

@@ -12,7 +12,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const axios_1 = __importDefault(require("axios"));
 const crypto_1 = __importDefault(require("crypto"));
 const public_1 = __importDefault(require("./public"));
 class KunaPrivate extends public_1.default {
@@ -27,17 +26,21 @@ class KunaPrivate extends public_1.default {
      *  Get account info
      */
     getAccountInfo() {
-        const url = 'auth/me';
-        const method = 'post';
-        return this.authedRequest(url, method);
+        return this.addAuth({
+            url: `auth/me`,
+            method: 'post',
+            data: {},
+        }).then(this.request.bind(this));
     }
     /**
      * Account balance
      */
     accountBalance() {
-        const url = 'auth/r/wallets';
-        const method = 'post';
-        return this.authedRequest(url, method);
+        return this.addAuth({
+            url: `auth/r/wallets`,
+            method: 'post',
+            data: {},
+        }).then(this.request.bind(this));
     }
     /**
      * Create an order
@@ -45,9 +48,11 @@ class KunaPrivate extends public_1.default {
      * @description https://docs.kuna.io/docs/%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C-%D0%BE%D1%80%D0%B4%D0%B5%D1%80-1
      */
     createOrder(order) {
-        const url = 'auth/w/order/submit';
-        const method = 'post';
-        return this.authedRequest(url, method, order);
+        return this.addAuth({
+            url: `auth/w/order/submit`,
+            method: 'post',
+            data: order
+        }).then(this.request.bind(this));
     }
     /**
      * List of active of orders
@@ -55,9 +60,11 @@ class KunaPrivate extends public_1.default {
      * @description https://docs.kuna.io/docs/%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C-%D0%BE%D1%80%D0%B4%D0%B5%D1%80-1
      */
     getOrders(market) {
-        const url = `auth/r/orders/${market}`;
-        const method = 'post';
-        return this.authedRequest(url, method);
+        return this.addAuth({
+            url: `auth/r/orders/${market}`,
+            method: 'post',
+            data: {},
+        }).then(this.request.bind(this));
     }
     /**
      * Cancel an order or orders
@@ -65,12 +72,11 @@ class KunaPrivate extends public_1.default {
      * @description https://docs.kuna.io/docs/%D0%BE%D1%82%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C-%D0%BE%D1%80%D0%B4%D0%B5%D1%80
      */
     cancelOrder(order_ids) {
-        // const url = `order/cancel` 
-        // const body = { order_id }
-        const url = `order/cancel/multi`;
-        const method = 'post';
-        const body = { order_ids: Array.isArray(order_ids) ? order_ids : [order_ids] };
-        return this.authedRequest(url, method, body);
+        return this.addAuth({
+            url: `order/cancel/multi`,
+            method: 'post',
+            data: { order_ids: Array.isArray(order_ids) ? order_ids : [order_ids] }
+        }).then(this.request.bind(this));
     }
     // ===================================================================> EXPERIMENTAL
     /**
@@ -125,9 +131,11 @@ class KunaPrivate extends public_1.default {
     getAssetsHistory(type = '') {
         if (type)
             type = '/' + type;
-        const url = `auth/assets-history` + type;
-        const method = 'post';
-        return this.authedRequest(url, method);
+        return this.addAuth({
+            url: `auth/assets-history${type}`,
+            method: 'post',
+            data: {},
+        }).then(this.request.bind(this));
     }
     /**
      * Get executed orders
@@ -135,9 +143,11 @@ class KunaPrivate extends public_1.default {
      * @description https://docs.kuna.io/docs/%D1%81%D0%BF%D0%B8%D1%81%D0%BE%D0%BA-%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%BD%D1%8B%D1%85-%D0%BE%D1%80%D0%B4%D0%B5%D1%80%D0%BE%D0%B2
      */
     getExecutedOrders(market) {
-        const url = `auth/r/orders/${market}/hist`;
-        const method = 'post';
-        return this.authedRequest(url, method);
+        return this.addAuth({
+            url: `auth/r/orders/${market}/hist`,
+            method: 'post',
+            data: {},
+        }).then(this.request.bind(this));
     }
     /**
      * List of trades by order
@@ -146,9 +156,11 @@ class KunaPrivate extends public_1.default {
      * @description https://docs.kuna.io/docs/%D1%81%D0%BF%D0%B8%D1%81%D0%BE%D0%BA-%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%BD%D1%8B%D1%85-%D0%BE%D1%80%D0%B4%D0%B5%D1%80%D0%BE%D0%B2
      */
     getTradesByOrderId(market, order_id) {
-        const url = `auth/r/order/${market}:${order_id}/trades`;
-        const method = 'post';
-        return this.authedRequest(url, method);
+        return this.addAuth({
+            url: `auth/r/order/${market}:${order_id}/trades`,
+            method: 'post',
+            data: {},
+        }).then(this.request.bind(this));
     }
     /**
      * Create signature
@@ -170,25 +182,17 @@ class KunaPrivate extends public_1.default {
      * @param {String} method http-method (post, put, delete, ...)
      * @param {Object} payload
      */
-    authedRequest(url_api, method = 'GET', payload = {}) {
+    addAuth(requestConfig) {
         return __awaiter(this, void 0, void 0, function* () {
-            const url = this.api + url_api;
             const nonce = yield this.getUnixTime();
-            const signature = this.getSignature(url_api, nonce, payload);
-            const headers = ({
+            const signature = this.getSignature(requestConfig.url, nonce, requestConfig.data);
+            requestConfig.headers = ({
                 'kun-nonce': nonce,
                 'kun-apikey': this.publicKey,
                 'kun-signature': signature,
                 'accept': 'application/json',
             });
-            return axios_1.default
-                .request({
-                url,
-                method,
-                data: payload,
-                headers,
-            })
-                .then((res) => res.data);
+            return requestConfig;
         });
     }
 }
