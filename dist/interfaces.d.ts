@@ -2,6 +2,7 @@ import KunaPublicV3 from "./v3/public";
 import KunaPrivateV3 from './v3/private';
 import KunaPublicV2 from "./v2/public";
 import KunaPrivateV2 from './v2/private';
+import { AxiosRequestConfig } from 'axios';
 interface IKeys {
     publicKey: string;
     secretKey: string;
@@ -19,6 +20,7 @@ interface KunaApiPublic {
     getOrderBook(market: string): Promise<any>;
     getUnixTime(): Promise<number | string>;
     getHistoryTrades(market: string): Promise<Array<Object>>;
+    request(requestConfig: AxiosRequestConfig): Promise<any>;
 }
 interface KunaApiPrivate {
     getAccountInfo(): Promise<any>;

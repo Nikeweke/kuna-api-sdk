@@ -24,7 +24,7 @@ interface KunaApiPublic {
   getOrderBook(market: string) : Promise<any>
   getUnixTime() : Promise<number | string>
   getHistoryTrades(market:  string) : Promise<Array<Object>> // v3 has not implemented this one
-  // request(requestConfig: AxiosRequestConfig) : Promise<any>
+  request(requestConfig: AxiosRequestConfig) : Promise<any>
 }
 
 interface KunaApiPrivate {
