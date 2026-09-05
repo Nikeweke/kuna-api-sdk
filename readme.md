@@ -1,5 +1,7 @@
 # Kuna API SDK
 
+> npm - https://www.npmjs.com/package/kuna-api-sdk
+
 > New version(3.0.0) has TS support, tests, a little change of instance init code
 
 ### Quick start
